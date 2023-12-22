@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="main">
+    <button id="btn">Kotki</button>
+  </div>
+
+  <div class="main">
+    <h1>Hello Marcin</h1>
+    <pre id="output" class="rounded-border-gradient"></pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script type="module">
+    const btn = document.querySelector("#btn")
+
+    btn.addEventListener("click", runScript)
+
+    function runScript() {
+      console.log("start")
+      axios.get("https://cat-fact.herokuapp.com/facts")
+        .then(response => {
+          const data = response.data;
+          data.forEach(item => {
+            const div = document.createElement("DIV");
+            div.innerText = item.text;
+            div.classList.add("item")
+
+            document.getElementById('output').appendChild(div)
+          })
+
+        })
+        .catch(error => {
+          document.getElementById('output').innerText = error.message;
+        });
+    }
+  </script>
+</body>
+</html>
